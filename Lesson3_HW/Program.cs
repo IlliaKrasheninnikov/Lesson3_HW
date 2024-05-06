@@ -88,7 +88,7 @@ public class User
         set 
         {
             value = value.ToString();
-            bool isValidGender = Enum.TryParse(value, out Gender _gender);
+            bool isValidGender = Enum.TryParse(value, out Gender _gender) && Enum.IsDefined(typeof(Gender), value);
 
             if (!isValidGender)
             {
