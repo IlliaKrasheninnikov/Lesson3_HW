@@ -14,49 +14,56 @@ class Program
     private static void Main(string[] args)
     {
         User user1 = new User(19);
+        bool enterError = false;
 
 
-        while (true)
+        do
         {
+            enterError = false;
             try
             {
                 Console.WriteLine("Enter your gender Male (or 0), Female (or 1), or Mechanic (or 2). :");
                 user1.Gender = Console.ReadLine();
-                break;
             }
             catch (ArgumentException ex)
             {
                 Console.WriteLine(ex.Message);
+                enterError = true;
             }
-        }
 
-        while (true)
+        } while (enterError);
+
+        do
         {
+            enterError = false;
             try
             {
                 Console.WriteLine("Enter your first name:");
                 user1.FirstName = Console.ReadLine();
-                break;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine(ex.Message); 
-            }
-        }
-
-        while (true)
-        {
-            try
-            {
-                Console.WriteLine("Enter your second name:");
-                user1.SecondName = Console.ReadLine();
-                break;
             }
             catch (ArgumentException ex)
             {
                 Console.WriteLine(ex.Message);
+                enterError = true;
             }
-        }
+
+        } while (enterError);
+
+        do
+        {
+            enterError = false;
+            try
+            {
+                Console.WriteLine("Enter your second name:");
+                user1.SecondName = Console.ReadLine();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                enterError = true;
+            }
+
+        } while (enterError);
 
         Console.WriteLine(user1);
 
@@ -80,7 +87,9 @@ public class User
         }
         set 
         {
-            bool isValidGender = Enum.TryParse(value, out _gender);
+            value = value.ToString();
+            bool isValidGender = Enum.TryParse(value, out Gender _gender);
+
             if (!isValidGender)
             {
                 throw new ArgumentException("Please enter correct genger: Male (or 0), Female (or 1), or Mechanic (or 2).");
