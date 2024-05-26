@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -24,20 +25,20 @@ namespace Lesson3_HW
             }
             set
             {
-                value = value.ToString();
-                bool isValidGender = Enum.TryParse(value, out Gender _gender) && Enum.IsDefined(typeof(Gender), value);
-
-                if (!isValidGender)
-                {
-                    throw new ArgumentException("Please enter correct genger: Male (or 0), Female (or 1), or Mechanic (or 2).");
-                }
-                _gender = (Gender)Enum.Parse(typeof(Gender), value);
-
-
+                CorrectGender(value);
             }
         }
 
-
+        private void CorrectGender(string gender)
+        {
+            bool isValidGender = Enum.TryParse(typeof(Gender), gender, true, out var parsedGender) && Enum.IsDefined(typeof(Gender), parsedGender);
+            //Console.WriteLine(gender + " " + parsedGender);
+            if (!isValidGender)
+            {
+                throw new ArgumentException("Please enter correct genger: Male (or 0), Female (or 1), or Mechanic (or 2).");
+            }
+            _gender = (Gender)parsedGender;
+        }
 
         public int Age
         {
@@ -62,9 +63,7 @@ namespace Lesson3_HW
 
         private void SetGender()
         {
-            
             _gender = (Gender)Enum.Parse(typeof(Gender), "Mechanic");
-
         }
 
         public string FirstName
