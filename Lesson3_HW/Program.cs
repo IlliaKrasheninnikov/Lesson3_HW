@@ -2,12 +2,7 @@
 using System.Runtime.Intrinsics.X86;
 using System.Text.RegularExpressions;
 
-public enum Gender
-{
-    Male,
-    Female,
-    Mechanic
-}
+
 
 class Program
 {
