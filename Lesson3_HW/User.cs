@@ -37,6 +37,8 @@ namespace Lesson3_HW
             }
         }
 
+
+
         public int Age
         {
             get { return _age; }
@@ -44,25 +46,33 @@ namespace Lesson3_HW
 
         public User(int age)
         {
+            _firstName = "";
+            _secondName = "";
             _age = age;
-            _gender = (Gender)Enum.Parse(typeof(Gender), "Mechanic");
+            SetGender();
         }
 
         public User()
         {
+            _firstName = "";
+            _secondName = "";
             _age = 0;
-            _gender = (Gender)Enum.Parse(typeof(Gender), "Mechanic");
+            SetGender();
         }
+
+        private void SetGender()
+        {
+            
+            _gender = (Gender)Enum.Parse(typeof(Gender), "Mechanic");
+
+        }
+
         public string FirstName
         {
             get { return _firstName; }
             set
             {
-                Regex template = new Regex("^[A-Z][a-z]*$");
-                if (!template.IsMatch(value))
-                {
-                    throw new ArgumentException("Please enter correct First name.For example: Eudelme");
-                }
+                CorrectFirstName(value);
                 _firstName = value;
             }
         }
@@ -71,14 +81,28 @@ namespace Lesson3_HW
             get { return _secondName; }
             set
             {
-                Regex template = new Regex("^[A-Z][a-z]*$");
-                if (!template.IsMatch(value))
-                {
-                    throw new ArgumentException("Please enter correct Second name.For example: Schønning");
-                }
+                CorrectSecondName(value);
                 _secondName = value;
             }
 
+        }
+
+        private void CorrectFirstName(string firstName)
+        {
+            Regex template = new Regex("^[A-Z][a-z]*$");
+            if (!template.IsMatch(firstName))
+            {
+                throw new ArgumentException("Please enter correct First name. For example: Eudelme");
+            }
+        }
+
+        private void CorrectSecondName(string secondName)
+        {
+            Regex template = new Regex("^[A-Z][a-z]*$");
+            if (!template.IsMatch(secondName))
+            {
+                throw new ArgumentException("Please enter correct Second name.For example: Schønning");
+            }
         }
 
         public override string ToString()
